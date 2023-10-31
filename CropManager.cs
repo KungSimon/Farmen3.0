@@ -39,6 +39,9 @@ namespace Farmen2._0
         }
         public void CropMenu()
         {
+
+           
+
             bool cropMenu = true;
             while (cropMenu)
             {
@@ -94,7 +97,7 @@ namespace Farmen2._0
             if (crops.Count > 0)
             {
                 Crop lastItem = crops[crops.Count - 1];
-                lastItem.AddCrop(crops, lastItem.Id); // Skicka hela listan av grödor som en parameter
+                lastItem.AddCrop(crops,lastItem.Id); // Skicka hela listan av grödor som en parameter
             }
 
             /*foreach (Crop crop in crops)

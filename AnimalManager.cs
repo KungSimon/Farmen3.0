@@ -127,7 +127,7 @@ namespace Farmen2._0
                         break;
                         ;
                     case "2":
-                     
+                        AddAnimal();
                         break;
 
                     case "3":
@@ -137,42 +137,82 @@ namespace Farmen2._0
                         break;
 
                     case "4":
-                        Console.WriteLine("Choose an animal to feed by Id");
-                        int animalId = int.Parse(Console.ReadLine());
-
-                        Console.WriteLine("Choose a crop by Id to feed with:");
+                        Console.WriteLine();
                         CropManager cropManager = new CropManager();
                         List<Crop> crops = cropManager.GetCrops();
-
+                        ListAnimalSpecies();
+                        Console.WriteLine("Which species do you want to feed?");
+                        string species = (Console.ReadLine());
+                        foreach (Crop crop in crops)
+                        {
+                            Console.WriteLine(crop.GetDescription());
+                        }
+                        Console.WriteLine("With what crop? Choose by Id");
+                        int cropId = int.Parse(Console.ReadLine()); 
+                        
                         for (int i = 0; i < crops.Count; i++)
                         {
-                            Console.WriteLine(crops[i].GetDescription());
-                        }
-
-                        int cropId = int.Parse(Console.ReadLine());
-
-                        Animal selectedAnimal = animals.FirstOrDefault(animal => animal.Id == animalId);
-
-                        if (selectedAnimal != null)
-                        {
-                            Crop selectedCrop = crops.FirstOrDefault(crop => crop.Id == cropId);
-
-                            if (selectedCrop != null)
+                            if (crops[i].Id == cropId)
                             {
-                                Console.WriteLine("How much " + selectedCrop.CropType + " do you want to use?");
-                                int quantity = int.Parse(Console.ReadLine());
-                                FeedAnimal(selectedAnimal, selectedCrop, quantity);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid crop ID. Please select a valid crop.");
+                                Console.WriteLine("found crop ");
+                                FeedAnimal(species, crops[i]);
                             }
                         }
-                        else
+
+
+
+
+                        /*CropManager cropManager = new CropManager();
+                        List<Crop> crops = cropManager.GetCrops();
+                        Console.WriteLine("Which species do you want to feed?");
+                         string species = (Console.ReadLine());
+                        for (int i = 0; i < animals.Count; i++)
                         {
-                            Console.WriteLine("Invalid animal ID. Please select a valid animal.");
-                        }
+                            if (animals[i].Species == species)
+                            {
+                                List<string> acceptableCropTypes = animals[i].acceptableCropTypes;
+                                Console.WriteLine(string.Join(", ", acceptableCropTypes));
+                                Console.WriteLine("Choose a croptype");
+                                string cropType = Console.ReadLine();
+                               
+                                foreach (Crop crop in crops)
+                                {
+
+                                    if (crop.CropType == cropType)
+                                    {
+                                        Console.WriteLine(crop.GetDescription());
+
+                                        Console.WriteLine("Enter the ID of the crop you want to use:");
+                                        int selectedCropId = int.Parse(Console.ReadLine());
+                                        for (int j = 0; j < crops.Count; j++)
+                                        {
+                                            if (selectedCropId == crops[j].Id)
+                                            {
+                                                FeedAnimal(selectedCropId);
+                                            }
+                                        }
+
+
+                                            
+                                    }
+
+                                }
+                                //for (int j = 0; j < crops.Count; j++)
+                                //{
+                                //if (crops[j].CropType != cropType)
+                                //{
+                               // Console.WriteLine(crops[i].GetDescription());
+                                    //}
+                                //}
+                                break;
+                            }
+                        }*/
+
+
                         break;
+                        case "5":
+                        Test();
+                        break; 
 
                     case "9":
                         animalMenu = false;
@@ -184,34 +224,44 @@ namespace Farmen2._0
 
         }
 
-        private void FeedAnimal(Animal animal, Crop crop, int quantity)
+        private void FeedAnimal(string species, Crop crop)
         {
-            animal.Feed(crop, quantity);
-
-
-            /*if (quantity > 0)
+            Console.WriteLine(crop.GetDescription());
+            CropManager cropManager = new CropManager();
+            List<Crop> crops = cropManager.GetCrops();
+            foreach (Crop crop1 in crops)
             {
-                if (quantity <= crop.Quantity)
+                Console.WriteLine(crop1.Id);
+            }
+            for (int i = 0; i < animals.Count; i++) 
+            {
+                if (animals[i].Species == species)
                 {
-                    crop.Quantity -= quantity;
-                    animal.Feed(crop, quantity);
 
-                    Console.WriteLine($"{animal.Species} has been fed with {quantity} units of {crop.CropType}.");
-                }
-                else
-                {
-                    Console.WriteLine($"Not enough {crop.CropType} available. Available quantity: {crop.Quantity}");
+                    List<string> acceptableCropTypes = animals[i].acceptableCropTypes;
+
+                    Console.WriteLine(string.Join(", ", acceptableCropTypes));
+                    for (int j = 0; j < crops.Count; j++)
+                    {
+                        Console.WriteLine(crops[i].Id);
+                        if (crops[j].Id == crop.Id)
+                        {
+                            Console.WriteLine( "Found you");
+                            string cropType = crops[j].CropType;
+                            if (acceptableCropTypes.Contains(cropType))
+                            {
+                                Console.WriteLine("How much crops do you want to use?");
+                                int quantity = int.Parse(Console.ReadLine());
+                                crop.TakeCrop(quantity);
+                            }
+                        }
+                    }
+
+                    break; 
                 }
             }
-            else if (quantity == 0)
-            {
-                Console.WriteLine("Request canceled.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please select a valid quantity.");
-            }*/
         }
+
 
         private bool AddAnimal()
         {
@@ -220,18 +270,18 @@ namespace Farmen2._0
             string name = Console.ReadLine();
             Console.WriteLine("What species is the animal");
             string species = Console.ReadLine();
-            /*Console.WriteLine("What does the animal eat?");
+            Animal newAnimal = new Animal(name, species);
+
             bool AddSpec = true;
             while (AddSpec)
             {
-                Console.WriteLine("What does the animal eat?");
+                Console.WriteLine("Do you want to add a type of food?");
                 string input = Console.ReadLine();
-                if (input == "")
+                if (input == "Y")
                 {
-                    Console.WriteLine("Add a speciality.");
-                    string speciality = Console.ReadLine();
-
-                    worker.Specialties.Add(speciality);
+                    Console.WriteLine("Add a food type.");
+                    string foodType = Console.ReadLine();
+                    newAnimal.AddCropType(foodType);
                 }
                 else if (input == "N")
                 {
@@ -243,10 +293,7 @@ namespace Farmen2._0
                 }
 
             }
-            workers.Add(worker);
-            string acceptableCropTypes = Console.ReadLine();*/
-            Animal animalToAdd = new Animal(name, species);
-            //AddAnimal();
+           animals.Add(newAnimal);
             return true;
         }
 
@@ -275,6 +322,41 @@ namespace Farmen2._0
         public List<Animal> GetAnimals()
         {
             return animals;
+        }
+        public void Test()
+        {
+            CropManager cropManager = new CropManager();
+            List <Crop> cropList = cropManager.GetCrops();
+            foreach (Crop crop in cropList)
+            {
+                Console.WriteLine(crop.GetDescription());
+            }
+           
+            List<Crop> cropList1 = cropManager.GetCrops();
+            foreach (Crop crop in cropList)
+            {
+                Console.WriteLine(crop.GetDescription());
+            }
+            
+            List<Crop> cropList2 = cropManager.GetCrops();
+            foreach (Crop crop in cropList)
+            {
+                Console.WriteLine(crop.GetDescription());
+            }
+        }
+        public void ListAnimalSpecies() 
+        { 
+            HashSet<string> speciesSet = new HashSet<string>(); 
+            foreach (Animal animal in animals) 
+            { 
+                speciesSet.Add(animal.Species); 
+            }
+            List<string> speciesList = new List<string>(speciesSet); 
+            Console.WriteLine("Species in the list:"); 
+            foreach (string species in speciesList) 
+            {
+                Console.WriteLine(species); 
+            } 
         }
     }
 }

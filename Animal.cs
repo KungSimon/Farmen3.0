@@ -40,7 +40,7 @@ namespace Farmen2._0
 
             return null;
         }
-        public void Feed(Crop crop, int quantity)
+        public void Feed(Crop crop)
         {
             CropManager cropManager = new CropManager();
             List<Crop> crops = cropManager.GetCrops();
@@ -50,6 +50,10 @@ namespace Farmen2._0
                 {
                     crops[i].TakeCrop(crops[i].Id);
                 }
+            }
+            foreach (Crop c in crops) 
+            {
+                Console.WriteLine(c.GetDescription());
             }
 
 
