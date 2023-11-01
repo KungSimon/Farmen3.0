@@ -42,19 +42,19 @@ namespace Farmen2._0
         }
         public void Feed(Crop crop)
         {
-            CropManager cropManager = new CropManager();
-            List<Crop> crops = cropManager.GetCrops();
-            for (int i = 0; i < crops.Count; i++)
-            {
-                if (crops[i] == crop)
-                {
-                    crops[i].TakeCrop(crops[i].Id);
-                }
-            }
-            foreach (Crop c in crops) 
-            {
-                Console.WriteLine(c.GetDescription());
-            }
+            //CropManager cropManager = new CropManager();
+            //List<Crop> crops = cropManager.GetCrops();
+            //for (int i = 0; i < crops.Count; i++)
+            //{
+            //    if (crops[i] == crop)
+            //    {
+            //        crops[i].TakeCrop(crops[i] );
+            //    }
+            //}
+            //foreach (Crop c in crops) 
+            //{
+            //    Console.WriteLine(c.GetDescription());
+            //}
 
 
 

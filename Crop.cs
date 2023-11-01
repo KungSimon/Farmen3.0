@@ -42,81 +42,26 @@ namespace Farmen2._0
 
             return null;
         }
-        public void AddCrop(List<Crop> crops, int id)
+        public void AddCrop(int cropQuantity)
         {
-            for (int i = 0; i < crops.Count; i++)
+            Quantity += cropQuantity;
+            Console.WriteLine($"Your new quantity is {Quantity}");
+        }
+        public bool TakeCrop(Crop crop, int cropQuantity)
+        {
+            Console.WriteLine(crop.Quantity);
+            if (crop.Quantity - cropQuantity < 0)
             {
-                if (crops[i].Id == id)
-                {
-                    Console.WriteLine("Enter the quantity of the crop: ");
-                    int Newquantity = int.Parse(Console.ReadLine());
-                    crops[i].Quantity += Newquantity;
-                    Console.WriteLine($" The quantity of {crops[i].Name} is {crops[i].Quantity} ");
-                    break;
-
-                }
+                return false;  
+            }
+            else
+            {
+                int newQuantity = crop.Quantity - cropQuantity;
+                crop.Quantity = newQuantity;
+                Console.WriteLine("your new quantity is" + crop.Quantity);
+                return true;
             }
         }
-        public bool TakeCrop(int Id)
-        {
-            CropManager cropManager = new CropManager();
-            List<Crop> crops = cropManager.GetCrops();
-            Console.WriteLine("How many of the crops do you want to use?");
-            int quantity = int.Parse(Console.ReadLine());
-            for (int i = 0; i < crops.Count; i++)
-            {
-                if (Id == crops[i].Id)
-                {
-
-                    quantity = CheckQuantity();
-                    crops[i].Quantity = -quantity;
-                    Console.WriteLine($"Now you have {crops[i].Quantity} left");
-
-
-                }
-            }
-
-            return true;
-
-        }
-        public int CheckQuantity() //Skapade denna funktion för att inte fåp för många måsvingar så att koden blir mer överskådlig
-        {
-            Console.WriteLine("Hej");
-            CropManager cropManager = new CropManager();
-            List<Crop> crops = cropManager.GetCrops();
-
-            for (int i = 0; i < crops.Count; i++)
-            {
-                while (true)
-                {
-                    try
-                    {
-                        Console.WriteLine($"How much {crops[i].Name} do you whant to use");
-                        int quantity = int.Parse(Console.ReadLine());
-
-                        if (crops[i].Quantity - quantity! < 0)
-                        {
-                            return quantity;
-                            break;
-                        }
-                        else if (quantity == 0)
-                        {
-                            return quantity;
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Not enough Crops ");
-                            Console.WriteLine("0 will cancel the request");
-                        }
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Please use numbers");
-                    }
-                }
-            }
-            return 0;
-        }
+        
     }
 }

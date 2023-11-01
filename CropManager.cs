@@ -8,7 +8,7 @@ namespace Farmen2._0
 {
     internal class CropManager
     {
-        List<Crop> crops = new List<Crop>();
+        public List<Crop> crops = new List<Crop>();
 
         public CropManager()
         {
@@ -39,8 +39,6 @@ namespace Farmen2._0
         }
         public void CropMenu()
         {
-
-           
 
             bool cropMenu = true;
             while (cropMenu)
@@ -81,50 +79,15 @@ namespace Farmen2._0
 
         private void AddCrop()
         {
-            /*foreach (Crop crop in crops)
-            {
-                Console.WriteLine(crop.GetDescription());
-            }*/
 
             Console.WriteLine("What's the crop's name?");
             string name = Console.ReadLine();
             Console.WriteLine("What's the crop's type?");
             string type = Console.ReadLine();
-            int quantity = 0;
-            Crop newCrop = new Crop(name, quantity, type);
-            crops.Add(newCrop);
-
-            if (crops.Count > 0)
-            {
-                Crop lastItem = crops[crops.Count - 1];
-                lastItem.AddCrop(crops,lastItem.Id); // Skicka hela listan av grödor som en parameter
-            }
-
-            /*foreach (Crop crop in crops)
-            {
-                Console.WriteLine(crop.GetDescription());
-            }
-            Console.WriteLine("Whats the crops name?");
-            string name = Console.ReadLine();
-            Console.WriteLine("Whats the crops type?");
-            string type = Console.ReadLine();
-            int quantity = 0;
-            Crop newCrop = new Crop(name, quantity, type);
-            crops.Add(newCrop);
-            Console.WriteLine(newCrop.Id);
-            newCrop.AddCrop(newCrop.Id);*/
-
-
-            //for (int i = 0; i < crops.Count; i++)
-            //{
-            //    int id = 0;
-            //    if (crops[i].Id == newCrop.Id)
-            //    {
-            //        crops[i].Id = id;
-            //        newCrop.AddCrop(id);
-            //    }    
-            //}
-
+            Console.WriteLine("How much crop do you whant to add ");
+            int quantity = int.Parse(Console.ReadLine());  
+            crops.Add(new Crop(name, quantity, type));
+            
         }
 
         private void RemoveCrop(int id)

@@ -8,9 +8,15 @@ namespace Farmen2._0
 {
     internal class Farm
     {
-        AnimalManager AnimalManager = new AnimalManager();
-        CropManager CropManager = new CropManager();
-        public Farm() { }
+         
+        CropManager cropManager;
+        AnimalManager animalManager;
+
+        public Farm() 
+        {
+            this.cropManager = new CropManager();
+            this.animalManager = new AnimalManager(cropManager);
+        }
 
         public void MainMenu()
         {
@@ -26,10 +32,10 @@ namespace Farmen2._0
                 switch (input)
                 {
                     case "1":
-                        AnimalManager.AnimalMenu();
+                        animalManager.AnimalMenu();
                         break;
                     case "2":
-                        CropManager.CropMenu();
+                        cropManager.CropMenu();
                         break;
 
                     case "9":
