@@ -63,11 +63,8 @@ namespace Farmen2._0
                         break;
 
                     case "3":
-                        ViewCrops();
-                        Console.WriteLine("Choose an crop to use by ID");
-                        int id = int.Parse(Console.ReadLine());
-                        RemoveCrop(id);
-                        ViewCrops();
+                        Crop crop = Checkcrop();
+                        RemoveCrop(crop.Id);
                         break;
 
                     case "9":
@@ -92,27 +89,68 @@ namespace Farmen2._0
 
         private void RemoveCrop(int id)
         {
-            for (int i = 0; i < crops.Count; i++)
-            {
-                if (crops[i].Id == id)
+            
+                for (int i = 0; i < crops.Count; i++)
                 {
-                    crops.Remove(crops[i]);
+                    if (crops[i].Id == id)
+                    {
+                        Console.WriteLine($"Crop {crops[i].Id} was succesfully removed.");
+                        crops.Remove(crops[i]);
+                    }
                 }
-            }
+                
+
         }
 
         private void ViewCrops()
         {
             Console.WriteLine("List of Crops:");
+            Console.WriteLine("");
             foreach (Crop crop in crops)
             {
-                crop.GetDescription();
+                Console.WriteLine(crop.GetDescription());
+                //crop.GetDescription();
             }
         }
         public List<Crop> GetCrops()
         {
             return crops;
         }
-       
+        public Crop Checkcrop()
+        {
+            foreach (Crop crop in crops)
+            {
+                Console.WriteLine(crop.GetDescription());
+            }
+            
+
+            bool foundCrop = false;
+            while (foundCrop == false)
+            {
+                Console.WriteLine("With what crop? Choose by Id");
+                try
+                {
+                    int cropId = int.Parse(Console.ReadLine());
+                    foreach (Crop crop in crops)
+                    {
+                        if (cropId == crop.Id)
+                        {
+                            Console.WriteLine("found crop ");
+
+                            return crop;
+                            foundCrop = true;
+                            break;
+                        }
+                    }
+                    if (!foundCrop)
+                    {
+                        Console.WriteLine("This is not an crop Id");
+                    }
+                }
+                catch { Console.WriteLine("Please chooes a crop Id"); }
+
+            }
+            return null;
+        }
     }
 }

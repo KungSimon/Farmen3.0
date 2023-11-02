@@ -26,8 +26,12 @@ namespace Farmen2._0
         }
         public override string GetDescription()
         {
+            string formattedName = Name.PadRight(25);
+            string formattedQuantity = Quantity.ToString().PadRight(10);
+            string formattedCropType = CropType.PadRight(25);
+            return $"Id {Id}\tCropname: {formattedName}Quantity of crop: {formattedQuantity}Croptype: {formattedCropType}";
 
-            if (Name.Length <= 5)
+            /*if (Name.Length <= 5)
             {
                 Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
             }
@@ -42,9 +46,9 @@ namespace Farmen2._0
             else
             {
                 Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name  + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
-            }
+            }*/
 
-            return null;
+            //return null;
         }
         public void AddCrop(int cropQuantity)
         {
@@ -56,6 +60,7 @@ namespace Farmen2._0
             //Console.WriteLine(crop.Quantity);
             if (crop.Quantity - cropQuantity < 0)
             {
+                Console.WriteLine("Not enough crops.");
                 return false;  
             }
             else

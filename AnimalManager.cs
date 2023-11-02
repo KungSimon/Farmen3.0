@@ -18,23 +18,23 @@ namespace Farmen2._0
             this.manager = manager;
 
             //AnimalManager animalManager = new AnimalManager();
-            Animal animal1 = new Animal("Olle", "Pig");
+            Animal animal1 = new Animal("Matilda", "Pig");
             animal1.AddCropType("Grain");
             animal1.AddCropType("Grass");
             animal1.AddCropType("Cucumber plant");
-            Animal animal2 = new Animal("Olle", "Pig");
+            Animal animal2 = new Animal("Ruby", "Pig");
             animal2.AddCropType("Grain");
             animal2.AddCropType("Grass");
             animal2.AddCropType("Cucumber plant");
-            Animal animal3 = new Animal("Olle", "Pig");
+            Animal animal3 = new Animal("Elsie", "Pig");
             animal3.AddCropType("Grain");
             animal3.AddCropType("Grass");
             animal3.AddCropType("Cucumber plant");
-            Animal animal4 = new Animal("Olle", "Pig");
+            Animal animal4 = new Animal("Hazel", "Pig");
             animal4.AddCropType("Grain");
             animal4.AddCropType("Grass");
             animal4.AddCropType("Cucumber plant");
-            Animal animal5 = new Animal("Olle", "Pig");
+            Animal animal5 = new Animal("Pär", "Pig");
             animal5.AddCropType("Grain");
             animal5.AddCropType("Grass");
             animal5.AddCropType("Cucumber plant");
@@ -45,44 +45,44 @@ namespace Farmen2._0
             Animal animal7 = new Animal("Pelle", "Cow");
             animal7.AddCropType("Grain");
             animal7.AddCropType("Grass");
-            Animal animal8 = new Animal("Pelle", "Cow");
+            Animal animal8 = new Animal("Rosie", "Cow");
             animal8.AddCropType("Grain");
             animal8.AddCropType("Grass");
-            Animal animal9 = new Animal("Pelle", "Cow");
+            Animal animal9 = new Animal("Bella", "Cow");
             animal9.AddCropType("Grain");
             animal9.AddCropType("Grass");
-            Animal animal10 = new Animal("Pelle", "Cow");
+            Animal animal10 = new Animal("Daisy", "Cow");
             animal10.AddCropType("Grain");
             animal10.AddCropType("Grass");
-            Animal animal11 = new Animal("Pelle", "Cow");
+            Animal animal11 = new Animal("Bessie", "Cow");
             animal11.AddCropType("Grain");
             animal11.AddCropType("Grass");
-            Animal animal12 = new Animal("Rut", "Chicken");
+            Animal animal12 = new Animal("Kalle", "Chicken");
             animal12.AddCropType("Seed");
             Animal animal13 = new Animal("Rut", "Chicken");
             animal13.AddCropType("Seed");
-            Animal animal14 = new Animal("Rut", "Chicken");
+            Animal animal14 = new Animal("Ragnar", "Chicken");
             animal14.AddCropType("Seed");
-            Animal animal15 = new Animal("Rut", "Chicken");
+            Animal animal15 = new Animal("Danne", "Chicken");
             animal15.AddCropType("Seed");
-            Animal animal16 = new Animal("Rut", "Chicken");
+            Animal animal16 = new Animal("Bo", "Chicken");
             animal16.AddCropType("Seed");
             Animal animal17 = new Animal("Pernilla", "Sheep");
             animal17.AddCropType("Grass");
             animal17.AddCropType("Cucumber plant");
-            Animal animal18 = new Animal("Pernilla", "Sheep");
+            Animal animal18 = new Animal("Ida", "Sheep");
             animal18.AddCropType("Grass");
             animal18.AddCropType("Cucumber plant");
-            Animal animal19 = new Animal("Pernilla", "Sheep");
+            Animal animal19 = new Animal("Rosa", "Sheep");
             animal19.AddCropType("Grass");
             animal19.AddCropType("Cucumber plant");
-            Animal animal20 = new Animal("Pernilla", "Sheep");
+            Animal animal20 = new Animal("Hulda", "Sheep");
             animal20.AddCropType("Grass");
             animal20.AddCropType("Cucumber plant");
-            Animal animal21 = new Animal("Pernilla", "Sheep");
+            Animal animal21 = new Animal("Eskil", "Sheep");
             animal21.AddCropType("Grass");
             animal21.AddCropType("Cucumber plant");
-            Animal animal22 = new Animal("Pernilla", "Sheep");
+            Animal animal22 = new Animal("Krull", "Sheep");
             animal22.AddCropType("Grass");
             animal22.AddCropType("Cucumber plant");
 
@@ -137,36 +137,12 @@ namespace Farmen2._0
 
                     case "3":
                         ViewAnimals();
-                        bool remove = false;
-                        bool found = false;
-                        while (remove == false)
-                        {
-                            Console.WriteLine("Choose an animal to remove by Id");
-                            try
-                            {
-                                int id = int.Parse(Console.ReadLine());
-                                foreach (Animal animal in animals)
-                                {
-                                    if (id == animal.Id)
-                                    {
-                                        RemoveAnimal(id);
-                                        remove=true;
-                                        found = true;
-                                        break;
-                                    }
-                                }
-                                if (!found)
-                                {
-                                    Console.WriteLine("This is not an animal Id");
-                                }
-                            }
-                            catch { Console.WriteLine("Please chooes an animals Id"); }
-                        }
-                            break;
+                        ChooseAnimalToRemove();
+                        break;
 
                     case "4":
                         string species = ChooseSpecies();
-                        Crop crop = Checkcrop();
+                        Crop crop = manager.Checkcrop();
                         FeedAnimal(species, crop);
 
                         break; 
@@ -179,6 +155,35 @@ namespace Farmen2._0
             }
 
 
+        }
+
+        private void ChooseAnimalToRemove()
+        {
+            bool remove = false;
+            bool found = false;
+            while (remove == false)
+            {
+                Console.WriteLine("Choose an animal to remove by Id");
+                try
+                {
+                    int id = int.Parse(Console.ReadLine());
+                    foreach (Animal animal in animals)
+                    {
+                        if (id == animal.Id)
+                        {
+                            RemoveAnimal(id);
+                            remove = true;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        Console.WriteLine("This is not an animal Id");
+                    }
+                }
+                catch { Console.WriteLine("Please chooes an animals Id"); }
+            }
         }
 
         private string ChooseSpecies()
@@ -204,42 +209,7 @@ namespace Farmen2._0
             return species;
         }
 
-        private Crop Checkcrop()
-        {
-            List<Crop> crops = this.manager.GetCrops();
-            foreach (Crop crop in crops)
-            {
-                Console.Write(crop.GetDescription());
-            }
-            Console.WriteLine("With what crop? Choose by Id");
-
-            bool foundCrop = false;
-            while (foundCrop == false)
-            {
-                try
-                {
-                    int cropId = int.Parse(Console.ReadLine());
-                    foreach (Crop crop in crops)
-                    {
-                        if (cropId == crop.Id)
-                        {
-                            Console.WriteLine("found crop ");
-
-                            return crop;
-                            foundCrop = true;
-                            break;
-                        }
-                    }
-                    if (!foundCrop)
-                    {
-                        Console.WriteLine("This is not an crop Id");
-                    }
-                }
-                catch { Console.WriteLine("Please chooes a crop Id"); }
-               
-            }
-            return null;
-        }
+        
 
         private void FeedAnimal(string species, Crop crop)
         {
@@ -257,7 +227,7 @@ namespace Farmen2._0
                     Console.WriteLine("How much do you whant to feed each animal");
                     int food = int.Parse(Console.ReadLine());
                     int countOfSpecies = animals.Count(animal => animal.Species == species);
-                   
+                    
                     int usedCrop = countOfSpecies * food;
                     Console.WriteLine( $"You whant to use {usedCrop} units of {crop.GetName()}");
                     crop.TakeCrop(crop, usedCrop);
@@ -310,8 +280,7 @@ namespace Farmen2._0
             Console.WriteLine();
             foreach (Animal animals in animals)
             {
-
-                animals.GetDescription();
+                Console.WriteLine(animals.GetDescription());
             }
 
         }
@@ -321,7 +290,7 @@ namespace Farmen2._0
             {
                 if (animals[i].Id == id)
                 {
-                    Console.WriteLine($"Animal {animals[i].Id} succesfully removed.");
+                    Console.WriteLine($"Animal {animals[i].Id} was succesfully removed.");
                     animals.Remove(animals[i]);
                 }
             }
