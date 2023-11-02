@@ -27,17 +27,21 @@ namespace Farmen2._0
         public override string GetDescription()
         {
 
-            if (Name.Length <= 6)
+            if (Name.Length <= 5)
+            {
+                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
+            }
+            else if (Name.Length > 5 || Name.Length <= 10)
             {
                 Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
             }
-            else if (Name.Length > 6 || Name.Length <= 12)
+            else if (Name.Length > 10 || Name.Length <= 14)
             {
                 Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
             }
             else
             {
-                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
+                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name  + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
             }
 
             return null;
@@ -49,7 +53,7 @@ namespace Farmen2._0
         }
         public bool TakeCrop(Crop crop, int cropQuantity)
         {
-            Console.WriteLine(crop.Quantity);
+            //Console.WriteLine(crop.Quantity);
             if (crop.Quantity - cropQuantity < 0)
             {
                 return false;  
@@ -58,7 +62,7 @@ namespace Farmen2._0
             {
                 int newQuantity = crop.Quantity - cropQuantity;
                 crop.Quantity = newQuantity;
-                Console.WriteLine("your new quantity is" + crop.Quantity);
+                Console.WriteLine("Your new quantity is " + crop.Quantity);
                 return true;
             }
         }
