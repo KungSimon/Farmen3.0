@@ -30,7 +30,7 @@ namespace Farmen2._0
             return $"Id{Id}\tName: {formattedName}Species: {formattedSpecies} Eats: {cropTypes}";
             
         }
-        public void Feed(Crop crop)
+        public void Feed(Crop crop) //Vi använder inte Feed, eftersom vi gör funktionen i AnimalManager i FeedAnimal.
         {
             
             Console.WriteLine("How much do you want to feed the animal?");

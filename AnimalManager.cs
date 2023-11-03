@@ -16,8 +16,6 @@ namespace Farmen2._0
         public AnimalManager(CropManager manager)
         {
             this.manager = manager;
-
-            //AnimalManager animalManager = new AnimalManager();
             Animal animal1 = new Animal("Matilda", "Pig");
             animal1.AddCropType("Grain");
             animal1.AddCropType("Grass");
@@ -157,7 +155,7 @@ namespace Farmen2._0
 
         }
 
-        private void ChooseAnimalToRemove()
+        private void ChooseAnimalToRemove() //Den väljer djur baserat på Id, och funktionen kollar så att ett Id tillhör ett djur. 
         {
             bool remove = false;
             bool found = false;
@@ -186,7 +184,7 @@ namespace Farmen2._0
             }
         }
 
-        private string ChooseSpecies()
+        private string ChooseSpecies() //Listar species så att man kan välja en specifik species. 
         {
             string species = null;
             Console.WriteLine();
@@ -238,41 +236,56 @@ namespace Farmen2._0
         }
 
 
-        private bool AddAnimal()
+        private bool AddAnimal() //Du kan lägga till nya djur samt lägga till fler på en species som redan existerar och den får automatiskt rätt mat.
         {
-            
+            bool foundSpecies = false;
             Console.WriteLine("What is the animals name");
             string name = Console.ReadLine();
             name = name.Substring(0, 1).ToUpper() + name.Substring(1).ToLower();
 
-            bool AddSpec = false;
-            while (AddSpec == false)
-            {
-                Console.WriteLine("What species is the animal");
-                string species = Console.ReadLine();
-                species = species.Substring(0, 1).ToUpper() + species.Substring(1).ToLower();
-                
+            Console.WriteLine("What species is the animal");
+            string species = Console.ReadLine();
+            species = species.Substring(0, 1).ToUpper() + species.Substring(1).ToLower();
                 for (int i = 0; i < animals.Count; i++)
                 {
                     if (animals[i].Species == species)
                     {
-                        Animal newAnimal = new Animal(name, species);
+                        Animal newAnimal1 = new Animal(name, species);
                         List<string> acceptableCropTypes = animals[i].acceptableCropTypes;
                         foreach (string acceptableType in acceptableCropTypes)
                         {
-                            newAnimal.AddCropType(acceptableType);
+                            newAnimal1.AddCropType(acceptableType);
                         }
-                        animals.Add(newAnimal);
+                        animals.Add(newAnimal1);
                         Console.WriteLine("You have successfully added ");
-                        Console.WriteLine(newAnimal.GetDescription());
-                        return true;
+                        Console.WriteLine(newAnimal1.GetDescription());
+                        foundSpecies = true;
                         break;
-                    } 
+                    }
+
                 }
-                Console.WriteLine($"This farm does not breed choosen species {species}");
+            if (!foundSpecies)
+            {
+                Animal newAnimal = new Animal(name, species);
+                bool addFood = true;
+                while (addFood == true)
+                {
+                    Console.WriteLine("Do you want to add a food to the animal? Yes or No");
+                    string input = Console.ReadLine();
+                    if (input == "Yes" || input == "Y")
+                    {
+                        Console.WriteLine("What does the an eat?");
+                        string food = Console.ReadLine();
+                        newAnimal.AddCropType(food);
+                    }
+                    else if (input == "No" || input == "N")
+                    {
+                        addFood = false;
+                        Console.WriteLine(newAnimal.GetDescription());
+                    }
+                }
             }
-            
-            return true;
+                return true;
         }
 
         private void ViewAnimals()
@@ -301,7 +314,7 @@ namespace Farmen2._0
             return animals;
         }
        
-        public List<string> ListAnimalSpecies() 
+        public List<string> ListAnimalSpecies() //Listar vilka species vi har. 
         { 
             HashSet<string> speciesSet = new HashSet<string>(); 
             foreach (Animal animal in animals) 

@@ -30,34 +30,15 @@ namespace Farmen2._0
             string formattedQuantity = Quantity.ToString().PadRight(10);
             string formattedCropType = CropType.PadRight(25);
             return $"Id {Id}\tCropname: {formattedName}Quantity of crop: {formattedQuantity}Croptype: {formattedCropType}";
-
-            /*if (Name.Length <= 5)
-            {
-                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
-            }
-            else if (Name.Length > 5 || Name.Length <= 10)
-            {
-                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
-            }
-            else if (Name.Length > 10 || Name.Length <= 14)
-            {
-                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name + "\t\t" + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
-            }
-            else
-            {
-                Console.WriteLine("Id" + Id + "\t" + "Cropname: " + Name  + "Quantity of crop: " + Quantity + "\t" + "Croptype: " + CropType);
-            }*/
-
-            //return null;
         }
-        public void AddCrop(int cropQuantity)
+        public void AddCrop(Crop crop, int cropQuantity) //Vi la till en crop så att vi vet vilken crop den ska lägga till quantity på. 
         {
-            Quantity += cropQuantity;
-            Console.WriteLine($"Your new quantity is {Quantity}");
+            int newQuantity = crop.Quantity + cropQuantity;
+            crop.Quantity = newQuantity;
+            Console.WriteLine($"Your {crop.GetName()} quantity is now {crop.Quantity}");
         }
         public bool TakeCrop(Crop crop, int cropQuantity)
         {
-            //Console.WriteLine(crop.Quantity);
             if (crop.Quantity - cropQuantity < 0)
             {
                 Console.WriteLine("Not enough crops.");

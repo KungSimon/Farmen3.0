@@ -12,8 +12,6 @@ namespace Farmen2._0
 
         public CropManager()
         {
-            
-
             Crop crop = new Crop("Wheat", 100, "Grain");
             Crop crop1 = new Crop("Corn", 80, "Seed");
             Crop crop2 = new Crop("Rye", 100, "Grain");
@@ -58,7 +56,6 @@ namespace Farmen2._0
                         break;
 
                     case "2":
-                       
                         AddCrop();
                         break;
 
@@ -74,17 +71,35 @@ namespace Farmen2._0
             }
         }
 
-        private void AddCrop()
+        private void AddCrop() //Kollar om sädeslaget finns, och om det finns så läggs kvantiteten till på det gamla objektet.
+                               //Annars läggs nytt sädeslag till i listan. 
+                               
         {
-
+            bool foundCrop = false;
+            int quantity;
             Console.WriteLine("What's the crop's name?");
             string name = Console.ReadLine();
-            Console.WriteLine("What's the crop's type?");
-            string type = Console.ReadLine();
-            Console.WriteLine("How much crop do you whant to add ");
-            int quantity = int.Parse(Console.ReadLine());  
-            crops.Add(new Crop(name, quantity, type));
-            
+            name = name.Substring(0, 1).ToUpper() + name.Substring(1).ToLower();
+            for (int i = 0; i < crops.Count; i++) 
+            {
+               if (name == crops[i].GetName())
+                {
+                    Console.WriteLine("How much crop do you whant to add ");
+                    quantity = int.Parse(Console.ReadLine());
+                    crops[i].AddCrop(crops[i], quantity);
+                   
+                    foundCrop = true;
+                    break;
+                }
+            }
+            if (!foundCrop)
+            {
+                Console.WriteLine("What's the crop's type?");
+                string type = Console.ReadLine();
+                Console.WriteLine("How much crop do you whant to add ");
+                quantity = int.Parse(Console.ReadLine());
+                crops.Add(new Crop(name, quantity, type));
+            }
         }
 
         private void RemoveCrop(int id)
@@ -98,8 +113,6 @@ namespace Farmen2._0
                         crops.Remove(crops[i]);
                     }
                 }
-                
-
         }
 
         private void ViewCrops()
@@ -109,21 +122,18 @@ namespace Farmen2._0
             foreach (Crop crop in crops)
             {
                 Console.WriteLine(crop.GetDescription());
-                //crop.GetDescription();
             }
         }
         public List<Crop> GetCrops()
         {
             return crops;
         }
-        public Crop Checkcrop()
+        public Crop Checkcrop() // Kollar så att Id't tillhör en crop, och ger tillbaka en crop när du har rätt Id. 
         {
             foreach (Crop crop in crops)
             {
                 Console.WriteLine(crop.GetDescription());
             }
-            
-
             bool foundCrop = false;
             while (foundCrop == false)
             {
@@ -147,8 +157,7 @@ namespace Farmen2._0
                         Console.WriteLine("This is not an crop Id");
                     }
                 }
-                catch { Console.WriteLine("Please chooes a crop Id"); }
-
+                catch { Console.WriteLine("Please choose a crop Id"); }
             }
             return null;
         }
